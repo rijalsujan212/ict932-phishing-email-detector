@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Audit Logs{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Monitoring & Incident Response</div><h1>Security Audit Log</h1><p class="muted">Authentication, access-control, file-validation and analyst actions are recorded.</p></div></div>
+<section class="panel">
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Severity</th><th>User</th><th>Action</th><th>Details</th></tr></thead><tbody>
+{% for log in logs %}<tr><td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td><td><span class="badge {{ 'high-risk' if log.severity in ['WARNING','ERROR'] else 'low-risk' }}">{{ log.severity }}</span></td><td>{{ log.user_email }}</td><td>{{ log.action }}</td><td>{{ log.details }}</td></tr>{% endfor %}
+</tbody></table></div>
+</section>
+{% endblock %}

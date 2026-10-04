@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Quarantine{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Analyst Workflow</div><h1>Quarantine Review</h1><p class="muted">High-risk messages are quarantined for analyst decision.</p></div></div>
+<section class="panel">
+{% if analyses %}
+<div class="table-wrap"><table><thead><tr><th>File</th><th>Risk</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+{% for a in analyses %}
+<tr><td><a href="{{ url_for('analysis_result', analysis_id=a.id) }}">{{ a.filename }}</a></td><td>{{ a.risk_score }}%</td><td>{{ a.review_status }}</td><td>
+  <div class="actions compact">
+    <form method="post" action="{{ url_for('review', analysis_id=a.id, action='confirm') }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="small-btn danger" type="submit">Confirm Phishing</button></form>
+    <form method="post" action="{{ url_for('review', analysis_id=a.id, action='false-positive') }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="small-btn" type="submit">False Positive</button></form>
+    <form method="post" action="{{ url_for('review', analysis_id=a.id, action='release') }}"><input type="hidden" name="_csrf" value="{{ csrf_token() }}"><button class="small-btn" type="submit">Release</button></form>
+  </div>
+</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% else %}<p class="muted">No messages are currently quarantined.</p>{% endif %}
+</section>
+{% endblock %}

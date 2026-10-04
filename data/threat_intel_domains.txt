@@ -1,0 +1,6 @@
+# Safe synthetic/offline demonstration threat-intelligence list.
+secure-paypa1.example
+bank-security.example
+microsoft-login.example
+account-verify.example
+mailbox-update.example

@@ -1,45 +1,24 @@
-# Python virtual environments
 .venv/
 venv/
 env/
-
-# Python cache
 __pycache__/
 *.py[cod]
-
-# Environment variables and secrets
 .env
 .env.*
 !.env.example
-
-# Flask
 instance/
-.flaskenv
-
-# SQLite
 *.db
 *.sqlite
 *.sqlite3
-
-# Testing
 .pytest_cache/
 .coverage
 htmlcov/
-
-# IDE
 .vscode/
 .idea/
-
-# OS generated files
 .DS_Store
 Thumbs.db
-
-# Logs and temporary files
 *.log
 *.tmp
-*.temp
-
-# Python builds ignore
 build/
 dist/
 *.egg-info/

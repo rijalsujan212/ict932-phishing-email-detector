@@ -1,0 +1,13 @@
+From: Course Team <course@university.example>
+Reply-To: course@university.example
+To: student@example.com
+Subject: ICT932 tutorial reminder for Tuesday
+Authentication-Results: mail.example; spf=pass smtp.mailfrom=university.example; dkim=pass header.d=university.example; dmarc=pass header.from=university.example
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Hello,
+This is a reminder that the ICT932 tutorial is scheduled for Tuesday at 10:00 AM.
+Please bring your notes from the previous class. No action is required before class.
+Regards,
+Course Team

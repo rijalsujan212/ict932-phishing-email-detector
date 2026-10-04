@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Access Denied{% endblock %}
+{% block content %}<div class="auth-card"><div class="eyebrow">RBAC Enforcement</div><h1>403 — Access Denied</h1><p class="muted">Your role does not have permission to access this resource. The event has been recorded in the audit log when applicable.</p><a class="button primary" href="{{ url_for('dashboard') }}">Return to Dashboard</a></div>{% endblock %}

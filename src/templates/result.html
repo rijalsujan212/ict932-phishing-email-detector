@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Analysis Result{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <div class="eyebrow">Explainable Decision</div>
+    <h1>{{ analysis.filename }}</h1>
+    <p class="muted">Analysis #{{ analysis.id }} • {{ analysis.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+  </div>
+  <span class="risk-pill {{ analysis.classification|lower|replace(' ', '-') }}">{{ analysis.classification }} · {{ '%.1f'|format(analysis.risk_score) }}%</span>
+</div>
+
+<div class="stats-grid three">
+  <div class="stat-card"><span>Rule Score</span><strong>{{ '%.1f'|format(analysis.rule_score) }}%</strong></div>
+  <div class="stat-card"><span>ML Probability</span><strong>{{ '%.1f'|format(analysis.ml_probability) }}%</strong></div>
+  <div class="stat-card"><span>Quarantine</span><strong>{{ 'YES' if analysis.quarantined else 'NO' }}</strong></div>
+</div>
+
+<div class="grid-2">
+  <section class="panel">
+    <h2>Why this decision was made</h2>
+    <ul class="evidence-list">
+      {% for item in indicators %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>Header / Identity Signals</h2>
+    <div class="metric-row"><span>Sender</span><strong class="wrap">{{ analysis.sender or 'Not available' }}</strong></div>
+    <div class="metric-row"><span>Reply-To</span><strong class="wrap">{{ analysis.reply_to or 'Not available' }}</strong></div>
+    <div class="metric-row"><span>SPF</span><strong>{{ analysis.spf|upper }}</strong></div>
+    <div class="metric-row"><span>DKIM</span><strong>{{ analysis.dkim|upper }}</strong></div>
+    <div class="metric-row"><span>DMARC</span><strong>{{ analysis.dmarc|upper }}</strong></div>
+    <div class="metric-row"><span>Analyst Review</span><strong>{{ analysis.review_status }}</strong></div>
+  </section>
+</div>
+
+<section class="panel">
+  <h2>URL / Domain Analysis</h2>
+  {% if urls %}
+  <div class="table-wrap"><table><thead><tr><th>Domain</th><th>Flags</th><th>URL</th></tr></thead><tbody>
+    {% for u in urls %}<tr><td>{{ u.domain }}</td><td>{{ u.flags|join(', ') if u.flags else 'No rule hit' }}</td><td class="wrap">{{ u.url }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<p class="muted">No URLs found.</p>{% endif %}
+</section>
+
+<section class="panel">
+  <h2>Attachment Safety</h2>
+  {% if attachments %}
+  <div class="table-wrap"><table><thead><tr><th>Filename</th><th>Type</th><th>Size</th><th>SHA-256</th></tr></thead><tbody>
+    {% for a in attachments %}<tr><td>{{ a.filename }}</td><td>{{ a.content_type }}</td><td>{{ a.size_bytes }} bytes</td><td class="mono wrap">{{ a.sha256 }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<p class="muted">No attachments. The system never executes attachments.</p>{% endif %}
+</section>
+
+<section class="panel">
+  <h2>Content Preview</h2>
+  <pre class="preview">{{ analysis.content_preview }}</pre>
+</section>
+{% endblock %}

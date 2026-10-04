@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}History{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="eyebrow">Traceable Evidence</div><h1>Analysis History</h1></div></div>
+<section class="panel">
+  <div class="section-head"><h2>Recorded Analyses</h2><div class="actions compact"><a class="button secondary" href="{{ url_for('export_csv') }}">CSV</a><a class="button secondary" href="{{ url_for('export_json') }}">JSON</a><a class="button secondary" href="{{ url_for('export_pdf') }}">PDF</a></div></div>
+  <div class="table-wrap"><table><thead><tr><th>ID</th><th>File</th><th>Risk</th><th>Classification</th><th>ML</th><th>Review</th><th>Date</th></tr></thead><tbody>
+  {% for a in analyses %}<tr><td>#{{ a.id }}</td><td><a href="{{ url_for('analysis_result', analysis_id=a.id) }}">{{ a.filename }}</a></td><td>{{ a.risk_score }}%</td><td><span class="badge {{ a.classification|lower|replace(' ', '-') }}">{{ a.classification }}</span></td><td>{{ a.ml_probability }}%</td><td>{{ a.review_status }}</td><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

@@ -1,0 +1,3 @@
+URGENT security alert. Your password expires today and your account will be suspended.
+Verify your account and confirm identity now by clicking here:
+http://microsoft-login.example/verify?next=http://account-verify.example

@@ -1,0 +1,51 @@
+name: Security CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Unit tests
+        run: pytest -q
+
+      - name: Bandit SAST
+        run: bandit -r src -x tests
+
+      - name: Dependency audit
+        run: pip-audit
+
+      - name: Basic secrets check
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          markers = ["AKIA", "BEGIN PRIVATE KEY", "BEGIN RSA PRIVATE KEY"]
+          hits = []
+          for base in [Path('src'), Path('tests'), Path('ci-cd')]:
+              for path in base.rglob('*'):
+                  if path.is_file():
+                      text = path.read_text(errors='ignore')
+                      for marker in markers:
+                          if marker in text:
+                              hits.append(f"{path}: {marker}")
+          if hits:
+              raise SystemExit("Potential secrets found:\n" + "\n".join(hits))
+          print("No basic secret markers detected in source/test/CI files.")
+          PY

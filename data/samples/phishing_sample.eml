@@ -1,0 +1,12 @@
+From: PayPal Security <security@paypa1.example>
+Reply-To: collect@bank-security.example
+To: student@example.com
+Subject: URGENT: Verify your account immediately
+Authentication-Results: mail.example; spf=fail smtp.mailfrom=paypa1.example; dkim=fail header.d=paypa1.example; dmarc=fail header.from=paypa1.example
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Security alert: unusual activity was detected on your account.
+Your account will be suspended unless you verify your account immediately.
+Click here to confirm identity and login immediately:
+http://secure-paypa1.example/verify?redirect=http://account-verify.example/login

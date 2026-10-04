@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Login | ICT932 Phishing Detector{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <div class="eyebrow">Secure Access</div>
+  <h1>Explainable Phishing Email Detector</h1>
+  <p class="muted">Password authentication is followed by TOTP two-factor authentication.</p>
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <label>Email</label>
+    <input name="email" type="email" required autocomplete="username" placeholder="analyst@demo.local">
+    <label>Password</label>
+    <input name="password" type="password" required autocomplete="current-password">
+    <button class="primary full" type="submit">Continue to 2FA</button>
+  </form>
+  <div class="note">Demo credentials are generated locally on first run and saved to <code>instance/demo_credentials.txt</code>.</div>
+</div>
+{% endblock %}

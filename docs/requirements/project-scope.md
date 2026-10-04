@@ -1,44 +1,5 @@
 # Project Scope
 
-## Project Title
+The project is a beginner-friendly prototype of an Explainable Phishing Email Detector. It analyses safe `.eml` and `.txt` input, combines rule-based indicators with a TF-IDF + Logistic Regression classifier, explains the decision, simulates quarantine and analyst feedback, and demonstrates a Zero Trust email-ingestion design.
 
-Explainable Phishing Email Detector
-
-## Objective
-
-Develop a simple cybersecurity web application that analyses email
-content and metadata to identify likely phishing emails and explain the
-indicators that influenced the detection result.
-
-## Core Functions
-
-- Secure login
-- Role-Based Access Control
-- Two-Factor Authentication
-- Safe email parsing
-- URL and domain analysis
-- Email header analysis
-- Rule-based phishing detection
-- Machine-learning classification
-- Explainable risk scoring
-- Quarantine simulation
-- Analyst feedback
-- Detection dashboard
-- CSV, JSON and PDF reports
-
-## Advanced Security Feature
-
-The project will implement Zero Trust Email Ingestion.
-
-Every uploaded email will be treated as untrusted until it is validated
-and safely analysed.
-
-## Project Constraints
-
-The project is being developed as a university prototype.
-
-It will use synthetic or authorised phishing samples only.
-
-Attachments will not be executed.
-
-URLs found in emails will not be automatically opened.
+Out of scope: real mailbox integration, attachment execution, live malware detonation, production-scale threat-intelligence feeds, and unauthorised testing.

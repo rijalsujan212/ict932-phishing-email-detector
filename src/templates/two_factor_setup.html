@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}2FA Setup{% endblock %}
+{% block content %}
+<div class="auth-card centered-text">
+  <div class="eyebrow">TOTP Setup</div>
+  <h1>Scan this QR code</h1>
+  <p class="muted">Use Google Authenticator, Microsoft Authenticator, or another TOTP app.</p>
+  <img class="qr" src="{{ url_for('two_factor_qr') }}" alt="TOTP QR code">
+  <p class="small">Manual secret: <code>{{ secret }}</code></p>
+  <a class="button primary" href="{{ url_for('two_factor') }}">Back to verification</a>
+</div>
+{% endblock %}

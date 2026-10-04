@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Two-Factor Authentication{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <div class="eyebrow">Identity Security</div>
+  <h1>Two-Factor Authentication</h1>
+  <p class="muted">Enter the current 6-digit code for <strong>{{ user.email }}</strong>.</p>
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <label>Authenticator code</label>
+    <input name="token" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" required placeholder="123456">
+    <button class="primary full" type="submit">Verify and Sign In</button>
+  </form>
+  <a class="button secondary full centered" href="{{ url_for('two_factor_setup') }}">Set up / view QR code</a>
+</div>
+{% endblock %}

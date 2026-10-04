@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Analyze Email{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <div class="eyebrow">Zero Trust Ingestion</div>
+    <h1>Analyze an Email</h1>
+    <p class="muted">Every input is treated as untrusted. URLs are never opened and attachments are hashed, not executed.</p>
+  </div>
+</div>
+
+<div class="grid-2">
+  <section class="panel">
+    <h2>Upload</h2>
+    <form method="post" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <label>Email file</label>
+      <input name="email_file" type="file" accept=".eml,.txt" required>
+      <p class="small muted">Permitted: .eml or .txt. Maximum size: 1 MB.</p>
+      <button class="primary" type="submit">Run Secure Analysis</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>What the system checks</h2>
+    <ul class="check-list">
+      <li>File type and size validation</li>
+      <li>Sender / Reply-To mismatch</li>
+      <li>SPF, DKIM and DMARC evidence</li>
+      <li>Suspicious and look-alike domains</li>
+      <li>Redirect-like URL parameters</li>
+      <li>Offline threat-intelligence list</li>
+      <li>Suspicious phishing language</li>
+      <li>Attachment metadata and SHA-256</li>
+      <li>TF-IDF + Logistic Regression classifier</li>
+      <li>Human-readable explanations</li>
+    </ul>
+  </section>
+</div>
+
+<section class="panel">
+  <h2>Safe demonstration files</h2>
+  <p class="muted">Use files from <code>data/samples/</code>:</p>
+  <ul>
+    <li><code>phishing_sample.eml</code> — designed to produce a high phishing score.</li>
+    <li><code>legitimate_sample.eml</code> — normal legitimate message.</li>
+    <li><code>blocked_sample.exe</code> — safe text content with a forbidden extension to demonstrate Zero Trust blocking.</li>
+  </ul>
+</section>
+{% endblock %}

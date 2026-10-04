@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <div class="eyebrow">{{ current_user.role|upper }} VIEW</div>
+    <h1>Security Dashboard</h1>
+    <p class="muted">Hybrid phishing detection, explainability, quarantine simulation and assurance metrics.</p>
+  </div>
+  <a class="button primary" href="{{ url_for('analyze') }}">Analyze Email</a>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card"><span>Total Analyses</span><strong>{{ stats.total }}</strong></div>
+  <div class="stat-card danger"><span>High Risk</span><strong>{{ stats.high }}</strong></div>
+  <div class="stat-card warning"><span>Medium Risk</span><strong>{{ stats.medium }}</strong></div>
+  <div class="stat-card success"><span>Low Risk</span><strong>{{ stats.low }}</strong></div>
+  <div class="stat-card"><span>Quarantined</span><strong>{{ stats.quarantined }}</strong></div>
+  <div class="stat-card"><span>False Positives</span><strong>{{ stats.false_positives }}</strong></div>
+</div>
+
+<div class="grid-2">
+  <section class="panel">
+    <h2>ML Validation</h2>
+    <div class="metric-row"><span>Precision</span><strong>{{ metrics.precision }}</strong></div>
+    <div class="metric-row"><span>Recall</span><strong>{{ metrics.recall }}</strong></div>
+    <div class="metric-row"><span>F1-score</span><strong>{{ metrics.f1 }}</strong></div>
+    <div class="metric-row"><span>False-positive rate</span><strong>{{ metrics.false_positive_rate }}</strong></div>
+    <div class="confusion">
+      <div><span>TN</span><strong>{{ metrics.confusion_matrix[0][0] }}</strong></div>
+      <div><span>FP</span><strong>{{ metrics.confusion_matrix[0][1] }}</strong></div>
+      <div><span>FN</span><strong>{{ metrics.confusion_matrix[1][0] }}</strong></div>
+      <div><span>TP</span><strong>{{ metrics.confusion_matrix[1][1] }}</strong></div>
+    </div>
+    <p class="small muted">{{ metrics.dataset_note }}</p>
+  </section>
+
+  <section class="panel">
+    <h2>Common Indicators</h2>
+    {% if top_indicators %}
+      {% for label, count in top_indicators %}
+      <div class="indicator-bar">
+        <div><span>{{ label }}</span><strong>{{ count }}</strong></div>
+        <progress class="progress" max="10" value="{{ [count, 10]|min }}">{{ count }}</progress>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="muted">Analyze sample emails to populate indicator statistics.</p>
+    {% endif %}
+  </section>
+</div>
+
+<section class="panel">
+  <div class="section-head">
+    <h2>Recent Analyses</h2>
+    <div class="actions compact">
+      <a class="button secondary" href="{{ url_for('export_csv') }}">CSV</a>
+      <a class="button secondary" href="{{ url_for('export_json') }}">JSON</a>
+      <a class="button secondary" href="{{ url_for('export_pdf') }}">PDF</a>
+    </div>
+  </div>
+  {% if analyses %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>File</th><th>Risk</th><th>Classification</th><th>Review</th><th>Date</th></tr></thead>
+      <tbody>
+      {% for a in analyses %}
+        <tr>
+          <td><a href="{{ url_for('analysis_result', analysis_id=a.id) }}">{{ a.filename }}</a></td>
+          <td>{{ '%.1f'|format(a.risk_score) }}%</td>
+          <td><span class="badge {{ a.classification|lower|replace(' ', '-') }}">{{ a.classification }}</span></td>
+          <td>{{ a.review_status }}</td>
+          <td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p class="muted">No analyses yet. Start with one of the safe samples in <code>data/samples/</code>.</p>
+  {% endif %}
+</section>
+{% endblock %}
