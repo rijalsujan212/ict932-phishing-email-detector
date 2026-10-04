@@ -1,0 +1,55 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Flask
+instance/
+.flaskenv
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Security scanning
+.bandit/
+.sonar/
+
+# IDE
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+*.temp
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+
+# Machine learning cache
+__pycache__/
