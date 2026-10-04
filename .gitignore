@@ -1,14 +1,11 @@
-# Python virtual environment
+# Python virtual environments
 .venv/
 venv/
 env/
 
-# Python generated files
+# Python cache
 __pycache__/
 *.py[cod]
-*$py.class
-*.pyo
-*.pyd
 
 # Environment variables and secrets
 .env
@@ -19,7 +16,7 @@ __pycache__/
 instance/
 .flaskenv
 
-# SQLite databases
+# SQLite
 *.db
 *.sqlite
 *.sqlite3
@@ -29,27 +26,20 @@ instance/
 .coverage
 htmlcov/
 
-# Security scanning
-.bandit/
-.sonar/
-
 # IDE
 .vscode/
 .idea/
 
-# Operating system files
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# Temporary files
+# Logs and temporary files
 *.log
 *.tmp
 *.temp
 
-# Python packaging
+# Python builds ignore
 build/
 dist/
 *.egg-info/
-
-# Machine learning cache
-__pycache__/
